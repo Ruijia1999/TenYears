@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<BehaviorTree>
+	<Node ID ="Root">
+	    <!--遇到人-->
+		<Node ID ="StopSteal">
+			<!--遇到的是单独女孩儿开始杀女孩儿-->
+			<Node ID ="StartKillGirl">
+				<!--时间到，女孩儿被杀死-->
+				<Node ID ="GirlIsKilled"/>
+				<!--男孩儿互动且无武器-->
+				<Node ID ="BothAreKilled"/>
+				<!--男孩儿互动且有武器-->
+				<Node ID ="RunAway_2"/>	
+			</Node>
+			<!--男孩儿互动且有电话-->
+			<Node ID ="RunAway_1"/>
+			<!--男孩儿互动且无电话-->
+			<Node ID ="Quarrel"/>
+			<!--否则停滞-->
+		</Node>
+		<!--人走开,返回上一级-->
+		<Node ID ="ContinueSteal"/>
+	</Node>
+</BehaviorTree>
