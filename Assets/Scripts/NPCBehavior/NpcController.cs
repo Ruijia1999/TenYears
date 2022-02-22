@@ -4,6 +4,7 @@ using System.Xml;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 public class NpcController : MonoBehaviour
 {
     public string npcName;
@@ -34,10 +35,25 @@ public class NpcController : MonoBehaviour
     {
         
     }
-
-    public void OnTrigger()
+    
+    //自动行走
+    public void AutoMove(string nodeID)
     {
-       
+        NPCAutoWalk moveNodes = Resources.Load<NPCAutoWalk>("Scriptable/AutoMove/"+nodeID);
+        Vector3[] nodes = moveNodes.Nodes;
+        foreach(var node in nodes)
+        {
+            transform.DOMove(node, 2);
+          
+          
+            
+        }
+        
+    }
+    public virtual void OnTrigger()
+    {
+        Debug.Log(npcName);
+       m_BehaviorTree.Excute(null);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

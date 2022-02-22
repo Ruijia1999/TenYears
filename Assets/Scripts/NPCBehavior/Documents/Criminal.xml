@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<BehaviorTree>
+	<Node ID ="Steal">
+		<Node ID ="Kill"/>
+		<Node ID ="Run"/>
+	</Node>
+</BehaviorTree>

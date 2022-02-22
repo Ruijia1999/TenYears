@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public GameObject leftArrow;
 
     public float player_speed = 0.001f;
-    private float offsetSize;
+
     public float top;
     public float bottom;
     //Ladder Status
@@ -31,9 +31,12 @@ public class PlayerController : MonoBehaviour
     PlayerStatus previousPlayerStatus;
     void Start()
     {
-        offsetSize = this.GetComponent<SpriteRenderer>().size.y / 2;
-        NpcController npc = new Mike();
-        npc.npcName = "Mike";
+        TimeTask task = new TimeTask("s", 0, 0);
+
+        Criminal npc = new Criminal();
+ 
+        
+        
         //BehaviorTreeHelp.InitiateTree(npc);
         
     }

@@ -18,16 +18,34 @@ public class StartmenuUI : MonoBehaviour
     {
         go_Notebook = GameObject.Find("notebook");
         notebook = go_Notebook.GetComponent<Notebook>();
+        btn_StartGame.onClick.AddListener(OnClick);
+
+        UIEventListener btnListener = btn_StartGame.gameObject.AddComponent<UIEventListener>();
+
+        btnListener.OnMouseEnter += delegate (GameObject gb)
+        {
+            btn_StartGame.transform.Find("Text").GetComponent<Text>().color =new Color(1, 0.427451f, 0.3294118f,1);
+            Debug.Log("enter");
+        };
+
+        btnListener.OnMouseExit += delegate (GameObject gb)
+        {
+            btn_StartGame.transform.Find("Text").GetComponent<Text>().color = new Color(150/255f, 65/255.0f, 38/255.0f,1);
+            Debug.Log("exit" + btn_StartGame.transform.Find("Text").GetComponent<Text>().color);
+        };
+        btn_Next.onClick.AddListener(NextPage);
+        btn_Last.onClick.AddListener(LastPage);
+        
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        btn_StartGame.onClick.AddListener(OnClick);
-        btn_Next.onClick.AddListener(NextPage);
-        btn_Last.onClick.AddListener(LastPage);
+        
     }
-
+    
     void OnClick()
     {
         if(Time.time - fixtime > 1)

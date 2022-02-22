@@ -8,6 +8,8 @@ TagManager:
   - vertical
   - bottom
   - top
+  - npc
+  - drag
   layers:
   - Default
   - TransparentFX
@@ -15,8 +17,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Drag
+  - Click
   - 
   - 
   - 
