@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Notebook : MonoBehaviour
 {
-
+    private int level = 0;
     public Animator animator;
     public int currentPage;
+    public StartmenuScene mouseControl;
+    private StartmenuUI startmenuUI;
     void Start()
     {
         currentPage = 0;
+        startmenuUI = GameObject.Find("Canvas").GetComponent<StartmenuUI>();
         //PageLayer = transform.Find("PageLayer").gameObject;
         //newPage = transform.Find("newPage").gameObject;
     }
@@ -21,28 +24,71 @@ public class Notebook : MonoBehaviour
     }
     public void OpenBook()
     {
-        
         currentPage++;
         animator.SetInteger("currentPage", currentPage);
+        mouseControl.enabled = true;
+
     }
 
+    private void closeBook()
+    {
+        animator.SetTrigger("LastPage");
+    }
     public void CloseBook()
     {
+        mouseControl.enabled = false;
         
-        currentPage--;
-        animator.SetInteger("currentPage", currentPage);
-        animator.SetTrigger("LastPage");
+       
+        if (currentPage > 1)
+        {
+            currentPage = 0;
+            animator.SetInteger("currentPage", currentPage);
+            animator.SetTrigger("LastPage");
+            Invoke("closeBook", 0.6f);
+            Invoke("BackToMenu", 1);
+        }
+       
+        else
+        {
+            currentPage = 0;
+            animator.SetInteger("currentPage", currentPage);
+            closeBook();
+            Invoke("BackToMenu", 0.5f);
+        }
+        
+        
+        
+        
+        
         
     }
 
+    public bool IsNewLevel()
+    {
+        return true;
+    }
+    private void BackToMenu()
+    {
+        startmenuUI.ShowMenu();
+    }
     public void GotoNextPage()
     {
 
 
+        if (currentPage == 0)
+        {
+            OpenBook();
 
-        currentPage++;
-        animator.SetInteger("currentPage", currentPage);
-        animator.SetTrigger("NextPage");
+        }
+        else
+        {
+            
+            animator.SetTrigger("NextPage");
+            animator.SetInteger("currentPage", currentPage);
+            currentPage++;
+
+        }
+
 
 
 
@@ -51,9 +97,20 @@ public class Notebook : MonoBehaviour
 
     public void GotoLastPage()
     {
-        currentPage--;
-        animator.SetInteger("currentPage", currentPage);
-        animator.SetTrigger("LastPage");
+        if (currentPage == 1)
+        {
+
+            CloseBook();
+
+        }
+        else
+        {
+            
+            animator.SetTrigger("LastPage");
+            currentPage--;
+            animator.SetInteger("currentPage", currentPage);
+        }
+        
     }
 
 

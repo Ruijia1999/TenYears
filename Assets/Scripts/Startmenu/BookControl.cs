@@ -6,7 +6,7 @@ public class BookControl : MonoBehaviour
 {
     public Animator BookAnimator;
     private Notebook notebook;
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -48,4 +48,6 @@ public class BookControl : MonoBehaviour
 
         }
     }
+
+    
 }

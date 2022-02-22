@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 public class UIEventListener : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    private bool isActive = true;
 
     /// <summary>  
     /// 定义事件代理  
@@ -26,21 +27,26 @@ public class UIEventListener : MonoBehaviour, IPointerClickHandler, IPointerEnte
     /// </summary>  
     public event UIEventProxy OnMouseExit;
 
+    public void SetActive(bool i_active)
+    {
+        isActive = i_active;
+    }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (OnClick != null)
+
+        if (OnClick != null && isActive)
             OnClick(this.gameObject);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (OnMouseEnter != null)
+        if (OnMouseEnter != null && isActive)
             OnMouseEnter(this.gameObject);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (OnMouseExit != null)
+        if (OnMouseExit != null && isActive)
             OnMouseExit(this.gameObject);
     }
 }

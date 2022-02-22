@@ -13,10 +13,16 @@ public class Drag : MonoBehaviour
     public bool IsMoveY;
     public Vector3 offset;
     public OnClick onClickEvent;
+    public bool enabled = true;
     [Serializable]
     public class OnClick : UnityEvent { }
-    // Start is called before the first frame update
-    void Start()
+
+    public OnMouseUp onMouseUpEvent;
+    [Serializable]
+    public class OnMouseUp : UnityEvent
+    { }
+        // Start is called before the first frame update
+        void Start()
     {
         previousPos = transform.position;
         previousRotate = transform.rotation;
@@ -30,9 +36,14 @@ public class Drag : MonoBehaviour
 
     public void Goback()
     {
+        Debug.Log(previousPos);
         transform.SetPositionAndRotation(previousPos, previousRotate);
     }
 
+    public Vector3 GetPreviousPos()
+    {
+        return previousPos;
+    }
     public void RotateWhenClick()
     {
         Vector3 s = previousPos - offset;
@@ -42,6 +53,10 @@ public class Drag : MonoBehaviour
     }
     public void MoveWhileDrag()
     {
+        if (!enabled)
+        {
+            return;
+        }
         Vector3 currentScreenSpace = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
         Vector3 currentPosition = Camera.main.ScreenToWorldPoint(currentScreenSpace) + offset;
         currentPosition = new Vector3(currentPosition.x, currentPosition.y, 0);
@@ -60,7 +75,7 @@ public class Drag : MonoBehaviour
             transform.position = new Vector3(transform.position.y,newY, transform.position.z);
         }
 
-
-
     }
+
+
 }

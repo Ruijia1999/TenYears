@@ -6,12 +6,13 @@ using UnityEngine.UI;
 public class StartmenuUI : MonoBehaviour
 {
     public Button btn_StartGame;
-    public Button btn_Next;
-    public Button btn_Last;
+    public Button btn_Continue;
+    public Button btn_Team;
+    public Button btn_Quit;
     public Animator UIAnimator;
     private GameObject go_Notebook;
     private  Notebook notebook;
-
+    private GameObject go_Buttons;
     private float fixtime = 0;
     // Start is called before the first frame update
     void Start()
@@ -20,24 +21,10 @@ public class StartmenuUI : MonoBehaviour
         notebook = go_Notebook.GetComponent<Notebook>();
         btn_StartGame.onClick.AddListener(OnClick);
 
-        UIEventListener btnListener = btn_StartGame.gameObject.AddComponent<UIEventListener>();
+        go_Buttons = GameObject.Find("Buttons");
 
-        btnListener.OnMouseEnter += delegate (GameObject gb)
-        {
-            btn_StartGame.transform.Find("Text").GetComponent<Text>().color =new Color(1, 0.427451f, 0.3294118f,1);
-            Debug.Log("enter");
-        };
-
-        btnListener.OnMouseExit += delegate (GameObject gb)
-        {
-            btn_StartGame.transform.Find("Text").GetComponent<Text>().color = new Color(150/255f, 65/255.0f, 38/255.0f,1);
-            Debug.Log("exit" + btn_StartGame.transform.Find("Text").GetComponent<Text>().color);
-        };
-        btn_Next.onClick.AddListener(NextPage);
-        btn_Last.onClick.AddListener(LastPage);
-        
-
-
+        Invoke("EnableMenu", 2);
+    
     }
 
     // Update is called once per frame
@@ -53,58 +40,67 @@ public class StartmenuUI : MonoBehaviour
             fixtime = Time.time;
         
             UIAnimator.SetBool("OpenUI", false);
-            StartCoroutine(OnFinished());
-        } 
+            Invoke("OnFinished",1);
+            DisableMenu();
+        }
+
         
        
     }
 
-    IEnumerator OnFinished()
+    private void OnFinished()
     {
-        yield return new WaitForSeconds(2);
-        notebook.OpenBook();
+        
+        notebook.GotoNextPage();
         
 
     }
-
-    void NextPage()
+    private void EnableMenu()
     {
-        if (Time.time - fixtime > 1)
-        {
-            fixtime = Time.time;
-            Debug.Log(notebook.currentPage);
-            if (notebook.currentPage == 0)
-            {
-                notebook.OpenBook();
+      
+        int amount = go_Buttons.transform.childCount;
 
-            }
-            else
-                notebook.GotoNextPage();
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject go = go_Buttons.transform.GetChild(i).gameObject;
+            UIEventListener btnListener = go.AddComponent<UIEventListener>();
+            btnListener.SetActive(true);
+            go.GetComponent<Button>().enabled = true;
+            btnListener.OnMouseEnter += delegate (GameObject gb)
+            {
+                go.transform.Find("Text").GetComponent<Text>().color = new Color(1, 0.427451f, 0.3294118f, 1);
+            };
+
+            btnListener.OnMouseExit += delegate (GameObject gb)
+            {
+                go.transform.Find("Text").GetComponent<Text>().color = new Color(150 / 255f, 65 / 255.0f, 38 / 255.0f, 1);
+            };
         }
-       
+
+    }
+    private void DisableMenu()
+    {
+
+        int amount = go_Buttons.transform.childCount;
+
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject go = go_Buttons.transform.GetChild(i).gameObject;
+            go.GetComponent<UIEventListener>().SetActive(false);
+            go.GetComponent<Button>().enabled = false;
+            go.transform.Find("Text").GetComponent<Text>().color = new Color(150 / 255f, 65 / 255.0f, 38 / 255.0f, 1);
+
+        }
     }
 
-    void LastPage()
+    public void ShowMenu()
     {
-        if (Time.time - fixtime > 1)
-        {
-            fixtime = Time.time;
-            Debug.Log(notebook.currentPage);
-            if (notebook.currentPage == 1)
-            {
-
-                notebook.CloseBook();
-
-            }
-            else
-            {
-                notebook.GotoLastPage();
-
-            }
-        }
+        EnableMenu();
+        UIAnimator.SetBool("OpenUI", true);
     }
 
 
+    
    
 
 }
