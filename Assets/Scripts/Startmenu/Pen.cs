@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class Pen : MonoBehaviour
 {
     private Drag drag;
@@ -25,7 +25,7 @@ public class Pen : MonoBehaviour
 
         if (inContent && notebook.IsNewLevel())
         {
-            Debug.Log("New Game Start");
+            SceneManager.LoadScene("Street");
         }
         else
         {

@@ -44,7 +44,7 @@ public class Notebook : MonoBehaviour
             currentPage = 0;
             animator.SetInteger("currentPage", currentPage);
             animator.SetTrigger("LastPage");
-            Invoke("closeBook", 0.6f);
+            Invoke("closeBook", 0.7f);
             Invoke("BackToMenu", 1);
         }
        
@@ -84,8 +84,9 @@ public class Notebook : MonoBehaviour
         {
             
             animator.SetTrigger("NextPage");
-            animator.SetInteger("currentPage", currentPage);
             currentPage++;
+            animator.SetInteger("currentPage", currentPage);
+            
 
         }
 

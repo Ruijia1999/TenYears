@@ -5,9 +5,14 @@ using UnityEngine;
 public class GameData
 {
     // Start is called before the first frame update
-    public static PlayerController player;
+
+    public static GameObject Ray;
+    public static GameObject Naya;
+    public static bool IfHasBicycle;
+    public static bool IfTogether;
     public static BackPack backPack;
-    public static Item currentItem;
+    private static TipUI tipUI;
+    public static string currentItem = null;
 
     public static int level;
     public static bool isAccompanied;
@@ -25,6 +30,8 @@ public class GameData
         f_screen_width = Screen.width;
         f_screen_height = Screen.height;
         NPCList = new Dictionary<string, NpcController>();
+        Ray = GameObject.Find("Ray").gameObject;
+        Naya = GameObject.Find("Naya").gameObject;
         GameObject[] npcs = GameObject.FindGameObjectsWithTag("npc");
         foreach(GameObject npc in npcs)
         {

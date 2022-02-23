@@ -68,12 +68,12 @@ public class StartmenuUI : MonoBehaviour
             go.GetComponent<Button>().enabled = true;
             btnListener.OnMouseEnter += delegate (GameObject gb)
             {
-                go.transform.Find("Text").GetComponent<Text>().color = new Color(1, 0.427451f, 0.3294118f, 1);
+                go.transform.Find("Text").GetComponent<Text>().color = new Color(1, 1, 1, 1);
             };
 
             btnListener.OnMouseExit += delegate (GameObject gb)
             {
-                go.transform.Find("Text").GetComponent<Text>().color = new Color(150 / 255f, 65 / 255.0f, 38 / 255.0f, 1);
+                go.transform.Find("Text").GetComponent<Text>().color = new Color(0.8078432f, 0.345098f, 0.2f, 1);
             };
         }
 
@@ -88,7 +88,7 @@ public class StartmenuUI : MonoBehaviour
             GameObject go = go_Buttons.transform.GetChild(i).gameObject;
             go.GetComponent<UIEventListener>().SetActive(false);
             go.GetComponent<Button>().enabled = false;
-            go.transform.Find("Text").GetComponent<Text>().color = new Color(150 / 255f, 65 / 255.0f, 38 / 255.0f, 1);
+            go.transform.Find("Text").GetComponent<Text>().color = new Color(0.8078432f, 0.345098f, 0.2f, 1);
 
         }
     }
