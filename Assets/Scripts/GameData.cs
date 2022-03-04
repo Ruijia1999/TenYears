@@ -10,7 +10,7 @@ public class GameData
     public static GameObject Naya;
     public static bool IfHasBicycle;
     public static bool IfTogether;
-    public static BackPack backPack;
+    public static BackpackUI backPackUI;
     private static TipUI tipUI;
     public static string currentItem = null;
 

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Pen : MonoBehaviour
 {
+    
+    
     private Drag drag;
     private Notebook notebook;
     private bool inContent = false;
@@ -20,12 +22,24 @@ public class Pen : MonoBehaviour
         
     }
 
+    public void ClickBeforeDrag()
+    {
+        
+        drag.RotateWhenClick();
+        if (notebook.isGuiding)
+        {
+            notebook.ContinueGuide(5);
+        }
+
+    }
+
     public void OnDragMouseUp()
     {
 
-        if (inContent && notebook.IsNewLevel())
+        if (inContent && (notebook.IsNewLevel()||notebook.isGuiding))
         {
             SceneManager.LoadScene("Street");
+            notebook.ContinueGuide(6);
         }
         else
         {

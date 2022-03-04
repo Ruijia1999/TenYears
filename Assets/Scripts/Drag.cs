@@ -12,17 +12,32 @@ public class Drag : MonoBehaviour
     public bool IsMoveX;
     public bool IsMoveY;
     public Vector3 offset;
-    public OnClick onClickEvent;
+    
     public bool enabled = true;
+    public OnClickDrag onClickDragEvent;
+    [Serializable]
+    public class OnClickDrag : UnityEvent { }
+
+    public OnClick onClickEvent;
     [Serializable]
     public class OnClick : UnityEvent { }
 
     public OnMouseUp onMouseUpEvent;
+
     [Serializable]
-    public class OnMouseUp : UnityEvent
-    { }
-        // Start is called before the first frame update
-        void Start()
+    public class OnMouseUp : UnityEvent{ }
+
+    public OnEnter onEnterEvent;
+
+    [Serializable]
+    public class OnEnter : UnityEvent { }
+
+    public OnExit onExitEvent;
+
+    [Serializable]
+    public class OnExit : UnityEvent { }
+    // Start is called before the first frame update
+    void Start()
     {
         previousPos = transform.position;
         previousRotate = transform.rotation;
@@ -33,7 +48,13 @@ public class Drag : MonoBehaviour
     {
         
     }
+    public void RotateWhenClick()
+    {
+        Vector3 s = previousPos - offset;
 
+        transform.RotateAround(s, Vector3.forward, rotate);
+        offset = transform.position - s;
+    }
     public void Goback()
     {
         Debug.Log(previousPos);
@@ -44,13 +65,7 @@ public class Drag : MonoBehaviour
     {
         return previousPos;
     }
-    public void RotateWhenClick()
-    {
-        Vector3 s = previousPos - offset;
-
-        transform.RotateAround(s, Vector3.forward, rotate);
-        offset = transform.position - s;
-    }
+    
     public void MoveWhileDrag()
     {
         if (!enabled)

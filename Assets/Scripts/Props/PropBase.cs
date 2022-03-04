@@ -59,9 +59,12 @@ public class PropBase : MonoBehaviour
 
     public void PutInBag()
     {
-        tipUI.ShowGetProp(str_propID, transform.GetComponent<SpriteRenderer>().sprite);
-        GameData.currentItem = str_propID;
-       // GameData.backPack.AddItem(str_propID, transform.GetComponent<SpriteRenderer>().sprite.texture);
+        object[] args = new object[1];
+        args[0] = (object)str_propID;
+        UIController.instance.OpenUI<TipUI>("Prefabs/UI/TipUI",args);
+        UIController.instance.GetUI<BackpackUI>("BackpackUI").AddItem(str_propID);
+        GameObject.Destroy(gameObject);
+       
     }
 
     public bool CheckCondition()

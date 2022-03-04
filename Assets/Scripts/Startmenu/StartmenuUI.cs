@@ -19,7 +19,7 @@ public class StartmenuUI : MonoBehaviour
     {
         go_Notebook = GameObject.Find("notebook");
         notebook = go_Notebook.GetComponent<Notebook>();
-        btn_StartGame.onClick.AddListener(OnClick);
+        
 
         go_Buttons = GameObject.Find("Buttons");
 
@@ -35,24 +35,53 @@ public class StartmenuUI : MonoBehaviour
     
     void OnClick()
     {
-        if(Time.time - fixtime > 1)
-        {
-            fixtime = Time.time;
         
-            UIAnimator.SetBool("OpenUI", false);
-            Invoke("OnFinished",1);
-            DisableMenu();
-        }
 
         
        
     }
 
-    private void OnFinished()
+    public void OnContinueGame()
     {
+        if (Time.time - fixtime > 1)
+        {
+            fixtime = Time.time;
+
+            UIAnimator.SetBool("OpenUI", false);
+            notebook.OpenBook(BookStatus.Continue);
+            DisableMenu();
+        }
+
         
-        notebook.GotoNextPage();
-        
+
+      
+    }
+    public void OnNewGame()
+    {
+        if (Time.time - fixtime > 1)
+        {
+            fixtime = Time.time;
+
+            UIAnimator.SetBool("OpenUI", false);
+            notebook.OpenBook(BookStatus.NewGame);
+            DisableMenu();
+        }
+       
+
+
+    }
+    public void OnTeam()
+    {
+
+        if (Time.time - fixtime > 1)
+        {
+            fixtime = Time.time;
+
+            UIAnimator.SetBool("OpenUI", false);
+            notebook.OpenBook(BookStatus.Team);
+            DisableMenu();
+        }
+
 
     }
     private void EnableMenu()
