@@ -8,6 +8,7 @@ public class GameInitManager : MonoBehaviour
     void Start()
     {
         UIController.instance.OpenUI<BackpackUI>("Prefabs/UI/BackpackUI");
+        UIController.instance.OpenUI<MainUI>("Prefabs/UI/MainUI");
     }
 
     // Update is called once per frame

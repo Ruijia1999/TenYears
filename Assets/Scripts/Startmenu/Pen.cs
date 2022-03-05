@@ -9,6 +9,7 @@ public class Pen : MonoBehaviour
     private Drag drag;
     private Notebook notebook;
     private bool inContent = false;
+    public Animation animation;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,15 +39,23 @@ public class Pen : MonoBehaviour
 
         if (inContent && (notebook.IsNewLevel()||notebook.isGuiding))
         {
-            SceneManager.LoadScene("Street");
+            
             notebook.ContinueGuide(6);
+            GetComponent<Animation>().Play();
+            animation.Play();
+            Invoke("EnternewLevel", 6);
         }
         else
         {
             drag.Goback();
         }
     }
-
+    void EnternewLevel()
+    {
+        UIController.instance.DestroyUI<StartmenuUI>("StartmenuUI");
+       
+        SceneManager.LoadScene("Home");
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         

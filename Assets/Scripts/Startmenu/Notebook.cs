@@ -12,17 +12,16 @@ public class Notebook : MonoBehaviour
 {
     private BookStatus status;
     public int currentPage;
-    private int currentLevel=4;
+    private int currentLevel=3;
     public bool isGuiding = false;
     private Animator coverAnimator;
     private Animator firstpageAnimator;
     private Animator newpageAnimator;
     
     public MouseController mouseControl;
-    private StartmenuUI startmenuUI;
+    //public StartmenuUI startmenuUI;
     
     private Dictionary<int, string> contents;
-
     public Animator guideAnimator;
     public GameObject go_guide;
     private GameObject btn_return;
@@ -39,8 +38,10 @@ public class Notebook : MonoBehaviour
     void Start()
     {
         currentPage = 0;
-        startmenuUI = GameObject.Find("Canvas").GetComponent<StartmenuUI>();
-      //  oldlevelContent = transform.Find("newPage/content").GetComponent<SpriteRenderer>();
+        //startmenuUI = GameObject.Find("Canvas").GetComponent<StartmenuUI>();
+      
+        //  oldlevelContent = transform.Find("newPage/content").GetComponent<SpriteRenderer>();
+        
         newlevelContent = transform.Find("newcontent").GetComponent<SpriteRenderer>();
         btn_return = transform.Find("Return").gameObject;
         go_next = transform.Find("NextPage").gameObject;
@@ -100,7 +101,7 @@ public class Notebook : MonoBehaviour
     void Return()
     {
         coverAnimator.SetTrigger("closebook");
-        Debug.Log("1");
+       
     }
     public void SetReutrnBtn()
     {
@@ -132,7 +133,8 @@ public class Notebook : MonoBehaviour
 
     private void BackToMenu()
     {
-        startmenuUI.ShowMenu();
+        UIController.instance.OpenUI<StartmenuUI>(null);
+        
     }
     public void GotoNextPage()
     {
@@ -141,15 +143,25 @@ public class Notebook : MonoBehaviour
         {
             return;
         }
-        
-       if (currentPage == 1)
+
+        if (status == BookStatus.NewGame)
         {
+            if (currentPage > 1)
+            {
+                return;
+            }
+               
+
+        }
+        if (currentPage == 1)
+        {
+            currentPage++;
             if (isGuiding)
             {
                 ContinueGuide(4);
             }
-            currentPage++;
-            // Invoke("UpdateContent",0.5f);
+           
+           
             firstpageAnimator.SetTrigger("next");
         }
         else
@@ -168,10 +180,20 @@ public class Notebook : MonoBehaviour
     }
     public void UpdateContent()
     {
-        if(status == BookStatus.Team)
+        newlevelContent.transform.Find("mask").gameObject.SetActive(false);
+        if (status == BookStatus.Team)
         {
             newlevelContent.sprite = Resources.Load<Sprite>("Texture/notebook/team");
             return;
+        }
+        if(status == BookStatus.NewGame)
+        {
+            if (currentPage == 2)
+            {
+                newlevelContent.sprite = Resources.Load<Sprite>("Texture/notebook/level_2");
+                newlevelContent.transform.Find("mask").gameObject.SetActive(true);
+                return;
+            }
         }
         //oldlevelContent.sprite = newlevelContent.sprite;
         if (currentPage == 0)
@@ -184,10 +206,14 @@ public class Notebook : MonoBehaviour
         }
         else
         {
-            newlevelContent.sprite = null;
+            newlevelContent.sprite = Resources.Load<Sprite>("Texture/notebook/level_" + currentPage);
+            newlevelContent.transform.Find("mask").gameObject.SetActive(true);
         }
     }
-
+    public void showTile()
+    {
+        transform.Find("Canvas/tile").GetComponent<Animation>().Play();
+    }
     public void GotoLastPage()
     {
         if (currentPage == 1)
@@ -225,7 +251,7 @@ public class Notebook : MonoBehaviour
     void NewGame()
     {
         isGuiding = true;
-        Invoke("StartGuide", 3);
+        Invoke("StartGuide", 2);
         go_next.SetActive(false);
         go_last.SetActive(false);
         btn_return.GetComponent<Drag>().enabled = false;
@@ -254,7 +280,7 @@ public class Notebook : MonoBehaviour
             case 5: guideAnimator.SetTrigger("continue");
                 
                 break;
-            case 6: guideAnimator.SetTrigger("continue"); break;
+            case 6: go_guide.SetActive(false); guideAnimator.SetTrigger("continue"); break;
         }
     }
     void Continue()

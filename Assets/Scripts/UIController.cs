@@ -11,6 +11,7 @@ public class UIController : MonoBehaviour
     // Awake
     public void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         instance = this;
         canvas = GameObject.Find("Canvas");
         panels = new Dictionary<string, UIBase>();
@@ -25,7 +26,16 @@ public class UIController : MonoBehaviour
     {
         
     }
+    public void CloseUI<T>() where T : UIBase
+    {
+        string name = typeof(T).ToString();
+        if (panels.ContainsKey(name))
+        {
+            panels[name].Close();
 
+            return;
+        }
+    }
     // Open UI
     public void OpenUI<T> (string UIpath, params object[] args) where T: UIBase
     {
@@ -55,5 +65,12 @@ public class UIController : MonoBehaviour
     {
         return (T)panels[UI_name];
     }
-  
+
+    public void DestroyUI<T>(string UI_name) where T : UIBase
+    {
+        Destroy(panels[UI_name].UIGameObject);
+        Destroy(canvas.GetComponent<T>());
+        
+      
+    }
 }

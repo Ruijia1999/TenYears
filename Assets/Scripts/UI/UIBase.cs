@@ -39,9 +39,9 @@ public class UIBase : MonoBehaviour
     // Close Animation
     public virtual void Close()
     {
-        
-        UIGameObject.SetActive(false);
         StartCoroutine(SetIsShowed(false));
+        UIGameObject.SetActive(false);
+        
     }
 
     IEnumerator SetIsShowed(bool status)
