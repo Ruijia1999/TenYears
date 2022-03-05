@@ -8,7 +8,7 @@ public class LoadHomeScene : MonoBehaviour
     void Start()
     {
         UIController.instance.OpenUI<MainUI>("Prefabs/UI/MainUI");
-        UIController.instance.OpenUI<MaskUI>("Prefabs/UI/MaskUI");
+       // UIController.instance.OpenUI<MaskUI>("Prefabs/UI/MaskUI");
     }
 
     // Update is called once per frame
