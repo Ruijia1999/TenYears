@@ -13,7 +13,8 @@ public class Drag : MonoBehaviour
     public bool IsMoveY;
     public Vector3 offset;
     
-    public bool enabled = true;
+    public bool enabledClick = true;
+    public bool enabledDrag = true;
     public OnClickDrag onClickDragEvent;
     [Serializable]
     public class OnClickDrag : UnityEvent { }
@@ -90,6 +91,25 @@ public class Drag : MonoBehaviour
             transform.position = new Vector3(transform.position.y,newY, transform.position.z);
         }
 
+    }
+    public void EnableDrag()
+    {
+        enabledDrag = true;
+    }
+
+    public void DisableDrag()
+    {
+        enabledDrag = false;
+    }
+
+    public void DisableClick()
+    {
+        enabledClick = false;
+    }
+
+    public void EnableClic()
+    {
+        enabledClick = true;
     }
 
 

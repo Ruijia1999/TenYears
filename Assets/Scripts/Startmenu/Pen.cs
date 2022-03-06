@@ -27,25 +27,30 @@ public class Pen : MonoBehaviour
     {
         
         drag.RotateWhenClick();
-        if (notebook.isGuiding)
-        {
-            notebook.ContinueGuide(5);
-        }
+
 
     }
 
     public void OnDragMouseUp()
     {
 
-        if (inContent && (notebook.IsNewLevel()||notebook.isGuiding))
+        if (inContent && notebook.isGuiding)
         {
-            
+            UIController.instance.GetUI<MaskUI>("MaskUI").StartMovie();
             notebook.ContinueGuide(6);
             GetComponent<Animation>().Play();
             animation.Play();
             Invoke("EnternewLevel", 6);
+        }else if (inContent && notebook.IsNewLevel())
+        {
+            UIController.instance.GetUI<MaskUI>("MaskUI").StartMovie();
+            GetComponent<Animation>().Play();
+            animation.Play();
+
+            Invoke("EnternewLevel", 6);
+           
         }
-        else
+        else 
         {
             drag.Goback();
         }
@@ -53,7 +58,12 @@ public class Pen : MonoBehaviour
     void EnternewLevel()
     {
         UIController.instance.DestroyUI<StartmenuUI>("StartmenuUI");
-       
+
+        UIController.instance.CloseUI<MaskUI>();
+        Invoke("LoadScene", 1);
+    }
+    void LoadScene()
+    {
         SceneManager.LoadScene("Home");
     }
     private void OnTriggerEnter2D(Collider2D collision)

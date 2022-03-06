@@ -30,7 +30,8 @@ public class Photo : MonoBehaviour
             }
             else
             {
-                drag.enabled = true;
+                drag.enabledClick = true;
+                drag.enabledDrag = true;
             }
             Invoke("EnableBook", 1f);
             
@@ -44,20 +45,24 @@ public class Photo : MonoBehaviour
                 isDisplaying = true;
                 startmenu.enabled = false;
                 notebook.ContinueGuide(2);
-                drag.enabled = false;
+                drag.enabledClick = false;
+                drag.enabledDrag = false;
                 animation.Play("DisplayPhoto");
-
+                Debug.Log(drag.GetPreviousPos() + "aaa" + transform.position);
             }
         }
     }
     public void OnClickBeforeDrag()
     {
-        if (notebook.isGuiding)
-        {
-            notebook.ContinueGuide(1);
-
-        }
+       
+ 
+        Vector3 prePos = drag.GetPreviousPos();
+        transform.position = new Vector3(prePos.x + 1, prePos.y, prePos.z);
+        drag.offset += new Vector3(1,0,0);
+        Debug.Log(drag.GetPreviousPos() + "aaa" + transform.position);
     }
+
+
     public void OnDragMouseUp()
     {
 

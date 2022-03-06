@@ -31,23 +31,23 @@ public class UIBase : MonoBehaviour
     public virtual void Show()
     {
         
-        UIGameObject.SetActive(true);
-        StartCoroutine(SetIsShowed(true));
+       // UIGameObject.SetActive(true);
+       // StartCoroutine(SetIsShowed(true));
         
     }
 
     // Close Animation
     public virtual void Close()
     {
-        StartCoroutine(SetIsShowed(false));
-        UIGameObject.SetActive(false);
+       // StartCoroutine(SetIsShowed(false));
+       // UIGameObject.SetActive(false);
         
     }
 
     IEnumerator SetIsShowed(bool status)
     {
         yield return new WaitForSeconds(1);
-        isShowed = status;
+       // isShowed = status;
     }
     #endregion
 }

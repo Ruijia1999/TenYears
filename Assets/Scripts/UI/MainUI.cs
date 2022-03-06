@@ -5,15 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class MainUI : UIBase
 {
-    Animation animation;
+   
     Button returnToMenu;
     // Start is called before the first frame update
     public override void Init(params object[] args)
     {
        
-
-        
-        animation = UIGameObject.GetComponent<Animation>();
         returnToMenu = UITransform.Find("Return").GetComponent<Button>();
         returnToMenu.onClick.AddListener(ReturnStartMenu);
         base.Init(args);
@@ -27,23 +24,23 @@ public class MainUI : UIBase
 
     public void ReturnStartMenu()
     {
-        Close();
-        UIController.instance.DestroyUI<MainUI>("MainUI");
-        UIController.instance.DestroyUI<MaskUI>("MaskUI");
-        SceneManager.LoadScene("Startmenu");
+
+        
+        UIController.instance.CloseUI<MaskUI>();
+        //UIController.instance.DestroyUI<MaskUI>("MaskUI");
+        Invoke("LoadNewScene", 1);
+        //SceneManager.LoadScene("Startmenu");
     }
 
-    public override void Show()
-    {
-        animation.Play("showMainUI");
    
-        base.Show();
-    }
-
-    public override void Close()
+    void LoadNewScene()
     {
-        animation.Play("fadeMainUI");
-        base.Close();
+        SceneManager.LoadScene("Startmenu");
+
+        UIController.instance.DestroyUI<MainUI>("MainUI");
+        
+      
     }
+   
 
 }

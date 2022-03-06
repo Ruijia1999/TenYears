@@ -58,7 +58,7 @@ public class MouseController : MonoBehaviour
                         Vector3 s = new Vector3(cam.ScreenToWorldPoint(Input.mousePosition).x, cam.ScreenToWorldPoint(Input.mousePosition).y, 0);
 
                         drag.offset = go_drag.transform.position - s;
-                    if (drag.enabled)
+                    if (drag.enabledClick)
                     {
                         drag.onClickDragEvent.Invoke();
                     }
@@ -78,7 +78,7 @@ public class MouseController : MonoBehaviour
 
         if (go_drag != null)
         {
-            if (!drag.enabled)
+            if (!drag.enabledDrag )
             {
                 //drag.enabled = true;
                 isDrage = false;
@@ -111,7 +111,7 @@ public class MouseController : MonoBehaviour
                 {
                     time1 = 0;
                     go_click = hitInfo2.collider.gameObject;
-                    if (go_click.GetComponent<Drag>().enabled)
+                    if (go_click.GetComponent<Drag>().enabledClick)
                     {
                         go_click.GetComponent<Drag>().onClickEvent.Invoke();
                     }
@@ -132,7 +132,7 @@ public class MouseController : MonoBehaviour
                 {
                     
                     go_enter = hitInfo2.collider.gameObject;
-                    if (go_enter.GetComponent<Drag>().enabled)
+                    if (go_enter.GetComponent<Drag>().enabledClick)
                     {
                         go_enter.GetComponent<Drag>().onEnterEvent.Invoke();
                     }

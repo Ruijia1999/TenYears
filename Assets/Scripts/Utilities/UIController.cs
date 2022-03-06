@@ -11,9 +11,10 @@ public class UIController : MonoBehaviour
     // Awake
     public void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+       // DontDestroyOnLoad(gameObject);
         instance = this;
         canvas = GameObject.Find("Canvas");
+
         panels = new Dictionary<string, UIBase>();
     }
 

@@ -251,12 +251,14 @@ public class Notebook : MonoBehaviour
     void NewGame()
     {
         isGuiding = true;
-        Invoke("StartGuide", 2);
+        Invoke("StartGuide", 0);
         go_next.SetActive(false);
         go_last.SetActive(false);
-        btn_return.GetComponent<Drag>().enabled = false;
-        photo.enabled = false;
-        pen.enabled = false;
+        btn_return.GetComponent<Drag>().enabledClick = false;
+        photo.enabledClick= false;
+        pen.enabledClick = false;
+        photo.enabledDrag= false;
+        pen.enabledDrag = false;
     }
     void StartGuide()
     {
@@ -268,38 +270,42 @@ public class Notebook : MonoBehaviour
         switch (stage)
         {
             case 0: go_guide.SetActive(true); guideAnimator.SetTrigger("continue"); 
-                photo.enabled = true; 
+                photo.enabledClick = true;
+                photo.enabledDrag = true;
                 break;
-            case 1: guideAnimator.SetTrigger("continue"); break;
+            //case 1: guideAnimator.SetTrigger("continue"); Invoke("EnablePhotoDrag", 2); break;
             case 2: guideAnimator.SetTrigger("continue"); go_guide.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0); break;
             case 3: go_guide.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1); 
                 guideAnimator.SetTrigger("continue");
                 go_next.SetActive(true);
                 break;
-            case 4: guideAnimator.SetTrigger("continue"); pen.enabled = true; break;
-            case 5: guideAnimator.SetTrigger("continue");
-                
-                break;
+            case 4: guideAnimator.SetTrigger("continue"); pen.enabledClick = true;pen.enabledDrag = true; break;
+            //case 5: guideAnimator.SetTrigger("continue"); pen.enabledClick = true; pen.enabledDrag = true; break;
             case 6: go_guide.SetActive(false); guideAnimator.SetTrigger("continue"); break;
         }
     }
+
     void Continue()
     {
         go_next.SetActive(true);
         go_last.SetActive(true);
-        btn_return.GetComponent<Drag>().enabled = true;
-        photo.enabled = true;
-        pen.enabled = true;
-        //btn_return.SetActive(true);
+        btn_return.GetComponent<Drag>().enabledClick = true;
+        photo.enabledClick = true;
+        pen.enabledClick = true;
+        photo.enabledDrag = true;
+        pen.enabledDrag = true;
+       
     }
 
     void Team()
     {
         go_next.SetActive(false);
         go_last.SetActive(true);
-        btn_return.GetComponent<Drag>().enabled = true;
-        photo.enabled = false;
-        pen.enabled = false;
+        btn_return.GetComponent<Drag>().enabledClick = true;
+        photo.enabledClick = false;
+        pen.enabledClick = false;
+        photo.enabledDrag = false;
+        pen.enabledDrag = false;
     }
     #endregion
    
