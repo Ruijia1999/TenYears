@@ -1,12 +1,14 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 public enum PropType
 {
     picked,
     condition_picked,
-    bicycle
+    interactable
 }
 public class PropBase : MonoBehaviour
 {
@@ -16,10 +18,29 @@ public class PropBase : MonoBehaviour
     private Button btn_Tip;
     private Text txt_Condition;
     public string str_Condition;
-    public string str_ConditionProp;
+    private GameObject Tip; //互动标志
+  //  public string str_ConditionProp;
     private Texture2D txture_prop;
 
-    public TipUI tipUI;
+    public OnGet onGetEvent;
+    [Serializable]
+    public class OnGet : UnityEvent { }
+
+    public OnCheck onCehckConditionsEvent;
+    [Serializable]
+
+    public class OnCheck : UnityEvent { }
+
+    public OnNear onNearEvent;
+    [Serializable]
+
+    public class OnNear : UnityEvent { }
+
+    public OnFar onFarEvent;
+    [Serializable]
+
+    public class OnFar : UnityEvent { }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +57,23 @@ public class PropBase : MonoBehaviour
         
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+   
+        if (propType == PropType.interactable && collision.gameObject.name.Equals("Ray"))
+        {
+            onNearEvent.Invoke();
+        }
+    }
+
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (propType == PropType.interactable&&collision.gameObject.name.Equals("Ray"))
+        {
+            onFarEvent.Invoke();
+        }
+    }
     public virtual bool IsAvailable()
     {
         return true;
@@ -43,14 +81,15 @@ public class PropBase : MonoBehaviour
 
     public void OnClick()
     {
+        Debug.Log(str_propID);
         switch (propType)
         {
-            case PropType.picked: PutInBag(); break;
-            //case PropType.condition_picked: GameData.IfHasBicycle = true; break;
-            case PropType.bicycle:
+            case PropType.picked: onGetEvent.Invoke(); break;
+            case PropType.condition_picked:
                 {
+                    Debug.Log(str_propID);
                     if (CheckCondition()){
-                        PutInBag();
+                        onGetEvent.Invoke();
                     }
                     break;
                 }
@@ -59,29 +98,20 @@ public class PropBase : MonoBehaviour
 
     public void PutInBag()
     {
-        object[] args = new object[1];
-        args[0] = (object)str_propID;
-        UIController.instance.OpenUI<TipUI>("Prefabs/UI/TipUI",args);
+       
+        MouseController.instance.enabled = false;
+        GameData.currentItem = str_propID;
+        UIController.instance.GetUI<TipUI>("TipUI").ShowGetProp(str_propID);
         UIController.instance.GetUI<BackpackUI>("BackpackUI").AddItem(str_propID);
         GameObject.Destroy(gameObject);
        
     }
 
-    public bool CheckCondition()
+    public virtual bool CheckCondition()
     {
-        Debug.Log(GameData.currentItem + " " + str_ConditionProp);
-        if (GameData.currentItem == null)
-        {
-            tipUI.ShowTip(str_Condition);
-            return false;
-        }
-
-        if (str_ConditionProp.Equals(GameData.currentItem))
-        {
-            return true;
-        }
-        tipUI.ShowTip(str_Condition);
-        return false;
+      
+       
+        return true;
     }
     
 }

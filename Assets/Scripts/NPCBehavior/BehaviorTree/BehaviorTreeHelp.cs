@@ -54,9 +54,9 @@ class BehaviorTreeHelp
     {
        
         MethodInfo method = type.GetMethod(id);
-        Debug.Log(method+" "+type.Name);
+        
 
-        Action<object> action = (Action<object>)Delegate.CreateDelegate(typeof(Action<object>), method);
+        Action<object[]> action = (Action<object[]>)Delegate.CreateDelegate(typeof(Action<object[]>), method);
 
         return new BehaviorTreeNode(action, id);
     }

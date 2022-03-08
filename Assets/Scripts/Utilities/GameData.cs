@@ -6,14 +6,14 @@ public class GameData
 {
     // Start is called before the first frame update
 
-    public static GameObject Ray;
+    public static RayController Ray;
     public static GameObject Naya;
     public static bool IfHasBicycle;
     public static bool IfTogether;
     public static BackpackUI backPackUI;
     private static TipUI tipUI;
     public static string currentItem = null;
-
+    public static CameraController cameraCtrl;
     public static int level;
     public static bool isAccompanied;
     public static bool isRiding;
@@ -29,11 +29,19 @@ public class GameData
     {
         f_screen_width = Screen.width;
         f_screen_height = Screen.height;
+        Ray = GameObject.Find("Ray").gameObject.GetComponent<RayController>();
+        cameraCtrl = Camera.main.GetComponent<CameraController>();
+        cameraCtrl.Init();
+
         NPCList = new Dictionary<string, NpcController>();
-        Ray = GameObject.Find("Ray").gameObject;
-        Naya = GameObject.Find("Naya").gameObject;
+       
+      
+        //Naya = GameObject.Find("Naya").gameObject;
+        
+
+       // Naya = GameObject.Find("Criminal").gameObject;
         GameObject[] npcs = GameObject.FindGameObjectsWithTag("npc");
-        foreach(GameObject npc in npcs)
+        foreach (GameObject npc in npcs)
         {
             NpcController npcctrl = npc.GetComponent<NpcController>();
             NPCList.Add(npcctrl.npcName, npcctrl);

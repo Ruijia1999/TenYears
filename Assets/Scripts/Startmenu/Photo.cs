@@ -48,7 +48,7 @@ public class Photo : MonoBehaviour
                 drag.enabledClick = false;
                 drag.enabledDrag = false;
                 animation.Play("DisplayPhoto");
-                Debug.Log(drag.GetPreviousPos() + "aaa" + transform.position);
+               
             }
         }
     }
@@ -59,14 +59,13 @@ public class Photo : MonoBehaviour
         Vector3 prePos = drag.GetPreviousPos();
         transform.position = new Vector3(prePos.x + 1, prePos.y, prePos.z);
         drag.offset += new Vector3(1,0,0);
-        Debug.Log(drag.GetPreviousPos() + "aaa" + transform.position);
+    
     }
 
 
     public void OnDragMouseUp()
     {
 
-       
             drag.Goback();
         
     }

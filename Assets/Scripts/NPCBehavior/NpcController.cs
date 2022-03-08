@@ -52,7 +52,7 @@ public class NpcController : MonoBehaviour
     }
     public virtual void OnTrigger()
     {
-        Debug.Log(npcName);
+       
        m_BehaviorTree.Excute(null);
     }
 

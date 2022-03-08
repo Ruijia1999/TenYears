@@ -25,7 +25,7 @@ public class TimeTaskManager
     public static void Tick()
     {
         TimeTaskManager.l_Tick += (long)(stopWatch.ElapsedMilliseconds);
-        //UnityEngine.Debug.Log(TimeTaskManager.l_Tick);
+        
         stopWatch.Reset(); //  开始监视代码运行时间
         stopWatch.Start();
 
@@ -41,6 +41,7 @@ public class TimeTaskManager
                     _taskList.Remove(task);
                     i_TimeTaskAmount--;
                     task.Excute();
+                    
                 }
             }
 
@@ -53,6 +54,5 @@ public class TimeTaskManager
         timeTask.l_NextTick += TimeTaskManager.l_Tick;
         _taskList.Add(timeTask);
         i_TimeTaskAmount++;
-UnityEngine.Debug.Log(timeTask.l_NextTick);
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MouseController : MonoBehaviour
 {
+
+    public static MouseController instance; 
     private Camera cam;//发射射线的摄像机
     private GameObject go_drag = null;//射线碰撞的物体
     private GameObject go_enter = null;//射线碰撞的物体
@@ -13,13 +15,18 @@ public class MouseController : MonoBehaviour
     private bool isDrage = false;
     public LayerMask draglayer;
     public LayerMask clicklayer;
+    public LayerMask enterlayer;
     public bool enabled = false;
     private float time1 = 0;
     private float time2 = 0.5f;
-    
+    private Texture2D cursor;
+    public bool ifChangeCursor = false;
     void Start()
     {
+        instance = this;
         cam = Camera.main;
+        cursor = Resources.Load<Texture2D>("Texture/cursor");
+
     }
 
 
@@ -38,41 +45,42 @@ public class MouseController : MonoBehaviour
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         //从摄像机发出到点击坐标的射线
 
+        
 
 
-
-        if (Input.GetMouseButton(0) && enabled)
+        if ( enabled)
         {
             if (!isDrage)
             {
+
+
+                //拖拽
                 RaycastHit2D hitInfo1 = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero,500,draglayer);
                 if (hitInfo1.collider != null )
                 {
-                    go_drag = hitInfo1.collider.gameObject;
-                    drag = go_drag.GetComponent<Drag>();
                    
+                   
+                    if (Input.GetMouseButton(0))
+                    {
+                        go_drag = hitInfo1.collider.gameObject;
                         isDrage = true;
-                        
-                        
-                        
+                        drag = go_drag.GetComponent<Drag>();
+
+
                         Vector3 s = new Vector3(cam.ScreenToWorldPoint(Input.mousePosition).x, cam.ScreenToWorldPoint(Input.mousePosition).y, 0);
 
                         drag.offset = go_drag.transform.position - s;
-                    if (drag.enabledClick)
-                    {
-                        drag.onClickDragEvent.Invoke();
+                        if (drag.enabledClick)
+                        {
+                            drag.onClickDragEvent.Invoke();
+                        }
                     }
-              
- 
-
-
+  
                 }
+             
                 
 
             }
-
-
-
         }
         
 
@@ -126,20 +134,26 @@ public class MouseController : MonoBehaviour
         {
             if(go_drag == null)
             {
-                RaycastHit2D hitInfo2 = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 500, clicklayer);
+                RaycastHit2D hitInfo2 = Physics2D.Raycast(new Vector2(ray.origin.x, ray.origin.y), Vector2.zero, 500,enterlayer);
 
                 if (hitInfo2.collider != null)
                 {
                     
+                    
                     go_enter = hitInfo2.collider.gameObject;
-                    if (go_enter.GetComponent<Drag>().enabledClick)
+                   
+                    if ( go_enter.GetComponent<Drag>().enabledClick)
                     {
                         go_enter.GetComponent<Drag>().onEnterEvent.Invoke();
+                        if(ifChangeCursor)
+                        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
                     }
                   
                 }
                 else
                 {
+                    if (ifChangeCursor)
+                        Cursor.SetCursor(default, Vector2.zero, CursorMode.Auto);
                     if (go_enter != null)
                     {
                         go_enter.GetComponent<Drag>().onExitEvent.Invoke();
@@ -148,6 +162,8 @@ public class MouseController : MonoBehaviour
                         
                     }
                 }
+
+               
             }
         }
 

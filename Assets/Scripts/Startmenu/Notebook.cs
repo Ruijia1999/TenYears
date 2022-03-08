@@ -93,7 +93,7 @@ public class Notebook : MonoBehaviour
         {
             currentPage = 0;
             coverAnimator.SetTrigger("closebook");
-            Debug.Log("2");
+         
             Invoke("BackToMenu", 1f);
         }
         
@@ -218,7 +218,7 @@ public class Notebook : MonoBehaviour
     {
         if (currentPage == 1)
         {
-            Debug.Log("3");
+            
             CloseBook();
 
         }

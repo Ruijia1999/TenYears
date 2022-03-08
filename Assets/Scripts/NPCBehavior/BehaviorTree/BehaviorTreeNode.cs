@@ -9,10 +9,10 @@ public class BehaviorTreeNode
 
 
     public string nodeID;
-    public readonly Action<object> action;
+    public readonly Action<object[]> action;
 
    
-    public BehaviorTreeNode(Action<object> i_action, string i_ID)
+    public BehaviorTreeNode(Action<object[]> i_action, string i_ID)
     {
         nodeID = i_ID;
         action = i_action;
@@ -26,7 +26,7 @@ public class BehaviorTreeNode
         children.Add(i_node);
     }
 
-    public virtual void Excute(object args)
+    public virtual void Excute(object[] args)
     {
         action.Invoke(args);
         

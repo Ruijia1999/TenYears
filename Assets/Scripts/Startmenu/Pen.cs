@@ -61,6 +61,7 @@ public class Pen : MonoBehaviour
 
         UIController.instance.CloseUI<MaskUI>();
         Invoke("LoadScene", 1);
+        
     }
     void LoadScene()
     {

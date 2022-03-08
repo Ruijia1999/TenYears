@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
-
+using UnityEngine;
 
 public class TimeTask
 {
@@ -24,7 +24,7 @@ public class TimeTask
 
     public virtual void Excute()
     {
-    
+        Debug.Log("触发");
     }
     
 }

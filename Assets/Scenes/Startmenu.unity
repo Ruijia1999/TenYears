@@ -1153,7 +1153,11 @@ MonoBehaviour:
   clicklayer:
     serializedVersion: 2
     m_Bits: 128
+  enterlayer:
+    serializedVersion: 2
+    m_Bits: 192
   enabled: 0
+  ifChangeCursor: 1
 --- !u!114 &440393560
 MonoBehaviour:
   m_ObjectHideFlags: 0

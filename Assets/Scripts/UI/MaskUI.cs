@@ -47,7 +47,7 @@ public class MaskUI : UIBase
     public override void Close()
     {
         animation.Play("fadeUI");
-        Debug.Log("kkk");
+       
         base.Close();
     }
     // Update is called once per frame

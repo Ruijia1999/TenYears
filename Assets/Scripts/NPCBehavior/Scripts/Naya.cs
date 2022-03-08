@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class Naya : NpcController
 {
-    static Animation a;
-    static Animator b;
+     static Animation a;
+   
     // Start is called before the first frame update
     void Start()
     {
         //m_BehaviorTree.nextID = "LeaveHome";
         //AutoMove("Naya_0");
        a = transform.GetComponent<Animation>();
-       b  = transform.GetComponent<Animator>();
-        Debug.Log("ddd"+b);
+     
         TimeTask task = new NPCTimeTask("Naya","Naya_chufa", 0, 5000);
         TimeTaskManager.AddTask(task);
         
@@ -32,10 +31,10 @@ public class Naya : NpcController
     {
         m_BehaviorTree.Excute(null);
     }
-    public static void LeaveHome(object args)
+    public static void LeaveHome(object[] args)
     {
         Debug.Log("Leave home");
-        b.SetTrigger("other");
+       
         a.Play();
     }
 

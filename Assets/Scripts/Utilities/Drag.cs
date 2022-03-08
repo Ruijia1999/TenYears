@@ -58,7 +58,7 @@ public class Drag : MonoBehaviour
     }
     public void Goback()
     {
-        Debug.Log(previousPos);
+      
         transform.SetPositionAndRotation(previousPos, previousRotate);
     }
 
