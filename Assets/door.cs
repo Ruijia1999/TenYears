@@ -29,29 +29,48 @@ public class door : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.F))
             {
-                if (gameObject.name.Equals("frontdoor"))
-                {
-
-                    UIController.instance.CloseUI<MaskUI>();
-                    Invoke("LoadScene", 1);
-                    
-                    return;
-                }
-                inAnimation = true;
-                if (!isOpened)
-                {
-                    
-                    animation["OpenDoor"].time = 0;
-                    //动画的播放速度为正常速度
-                    animation["OpenDoor"].speed = 1.0f;
-                    animation.Play("OpenDoor");
-                    GetComponent<BoxCollider2D>().enabled = false;
-                }
+                this.GetComponent<PropBase>().Interact();
             }
         }
     }
+
+    public void DoorInteract()
+    {
+        if (gameObject.name.Equals("frontdoor"))
+        {
+
+            UIController.instance.CloseUI<MaskUI>();
+            Invoke("LoadScene", 1);
+            OnFar();
+            return;
+        }
+        if (gameObject.name.Equals("board"))
+        {
+
+            UIController.instance.CloseUI<MaskUI>();
+            Invoke("LoadHomeScene", 1);
+            OnFar();
+            return;
+        }
+        inAnimation = true;
+        if (!isOpened)
+        {
+
+            animation["OpenDoor"].time = 0;
+            //动画的播放速度为正常速度
+            animation["OpenDoor"].speed = 1.0f;
+            animation.Play("OpenDoor");
+            GetComponent<BoxCollider2D>().enabled = false;
+
+        }
+    }
+    void LoadHomeScene()
+    {
+        SceneManager.LoadScene("Home");
+    }
     void LoadScene()
     {
+       // UIController.instance.ClearAllUI();
         SceneManager.LoadScene("street");
     }
     public void OnNear()

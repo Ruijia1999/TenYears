@@ -65,7 +65,7 @@ public class MouseController : MonoBehaviour
                         go_drag = hitInfo1.collider.gameObject;
                         isDrage = true;
                         drag = go_drag.GetComponent<Drag>();
-
+                        Debug.Log(go_drag.name);
 
                         Vector3 s = new Vector3(cam.ScreenToWorldPoint(Input.mousePosition).x, cam.ScreenToWorldPoint(Input.mousePosition).y, 0);
 

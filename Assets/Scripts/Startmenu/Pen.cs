@@ -65,6 +65,8 @@ public class Pen : MonoBehaviour
     }
     void LoadScene()
     {
+        UIController.instance.GetUI<MaskUI>("MaskUI").EndMovie();
+       // UIController.instance.ClearAllUI();
         SceneManager.LoadScene("Home");
     }
     private void OnTriggerEnter2D(Collider2D collision)

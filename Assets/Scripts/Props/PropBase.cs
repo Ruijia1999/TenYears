@@ -19,17 +19,20 @@ public class PropBase : MonoBehaviour
     private Text txt_Condition;
     public string str_Condition;
     private GameObject Tip; //互动标志
+    
   //  public string str_ConditionProp;
     private Texture2D txture_prop;
+    public bool isNeedNear;
+    private bool isNear; //玩家是否靠近道具
 
     public OnGet onGetEvent;
     [Serializable]
     public class OnGet : UnityEvent { }
-
-    public OnCheck onCehckConditionsEvent;
+    public OnInteract onInteractEvent;
     [Serializable]
 
-    public class OnCheck : UnityEvent { }
+    public class OnInteract : UnityEvent { }
+
 
     public OnNear onNearEvent;
     [Serializable]
@@ -44,7 +47,8 @@ public class PropBase : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       // tipUI = GameObject.Find("Canvas/Tip").GetComponent<TipUI>();
+        isNear = false;
+        // tipUI = GameObject.Find("Canvas/Tip").GetComponent<TipUI>();
         // go_Tip = transform.Find("Tip").gameObject;
         //  btn_Tip = go_Tip.GetComponent<Button>();
         //  btn_Tip.onClick.AddListener(OnClick);
@@ -60,19 +64,50 @@ public class PropBase : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
    
-        if (propType == PropType.interactable && collision.gameObject.name.Equals("Ray"))
+        if (collision.gameObject.name.Equals("Ray"))
         {
             onNearEvent.Invoke();
+            isNear = true;
+            Debug.Log("Isnear");
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.name.Equals("Ray"))
+        {
+            onNearEvent.Invoke();
+            isNear = true;
+            Debug.Log("Isnear2");
         }
     }
 
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (propType == PropType.interactable&&collision.gameObject.name.Equals("Ray"))
+        if (collision.gameObject.name.Equals("Ray"))
         {
             onFarEvent.Invoke();
+            isNear = false;
         }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+
+        if (collision.name.Equals("Ray"))
+        {
+            onFarEvent.Invoke();
+            isNear = false;
+        }
+    }
+    public void Interact()
+    {
+        if (isNeedNear && !isNear)
+        {
+            return;
+        }
+
+        onInteractEvent.Invoke();
     }
     public virtual bool IsAvailable()
     {
@@ -81,7 +116,11 @@ public class PropBase : MonoBehaviour
 
     public void OnClick()
     {
-        Debug.Log(str_propID);
+        if (isNeedNear && !isNear)
+        {
+            return;
+        }
+     
         switch (propType)
         {
             case PropType.picked: onGetEvent.Invoke(); break;
@@ -90,6 +129,10 @@ public class PropBase : MonoBehaviour
                     Debug.Log(str_propID);
                     if (CheckCondition()){
                         onGetEvent.Invoke();
+                    }
+                    else
+                    {
+                        UIController.instance.GetUI<DialogUI>("DialogUI").ShowSelf(str_Condition);
                     }
                     break;
                 }
@@ -100,7 +143,7 @@ public class PropBase : MonoBehaviour
     {
        
         MouseController.instance.enabled = false;
-        GameData.currentItem = str_propID;
+        
         UIController.instance.GetUI<TipUI>("TipUI").ShowGetProp(str_propID);
         UIController.instance.GetUI<BackpackUI>("BackpackUI").AddItem(str_propID);
         GameObject.Destroy(gameObject);

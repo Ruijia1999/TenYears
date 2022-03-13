@@ -35,6 +35,7 @@ public class InteractionUI : UIBase
 
     public void ShowPropInteractionTip(Vector3 i_prop_pos,string i_key, string i_description )
     {
+       
         Vector2 vec_ScreenPoint = RectTransformUtility.WorldToScreenPoint(Camera.main, i_prop_pos);
 
         

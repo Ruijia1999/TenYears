@@ -41,7 +41,7 @@ public class MaskUI : UIBase
     public void EndMovie()
     {
         animation.Play("EndMovie");
-       // go_movieMaks.SetActive(false);
+        go_movieMaks.SetActive(false);
         base.Show();
     }
     public override void Close()

@@ -30,6 +30,10 @@ public class BehaviorTree
             CurrentNode = LastNode;
             LastNode = null;
         }
+        else if (nextID.Equals("Self"))
+        {
+    
+        }
         else
         {
             CurrentNode = CurrentNode.GetNextNode(nextID);

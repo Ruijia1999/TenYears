@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 49e1bc5b7833dd940825fe6eddabef95
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - NicoBold
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e5aa01d01f48b3445970758ec024d769, type: 3}
+  - {fileID: 12800000, guid: 66495aa40de96d0479ef9f6c3937ae08, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

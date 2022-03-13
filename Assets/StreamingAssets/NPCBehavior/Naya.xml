@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<BehaviorTree>
+		<Node ID ="LeaveHome">
+			<Node ID ="Meet_1">
+				<Node ID ="MeetRay">
+					<Node ID ="ArriveSchool"></Node>
+				</Node>
+				<Node ID="Die"/>
+			</Node>
+			
+		</Node>
+</BehaviorTree>

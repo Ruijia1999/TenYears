@@ -13,21 +13,25 @@ class BehaviorTreeHelp
     public static void InitiateTree(NpcController i_Npc)
     {
         Type type = Type.GetType(i_Npc.npcName);
-        
 
-        
+
+    
         
         XmlDocument xml = new XmlDocument();
         Queue<XmlNode> nodeList = new Queue<XmlNode>();
         Queue<BehaviorTreeNode> treenodeList = new Queue<BehaviorTreeNode>();
 
-        xml.Load(Application.dataPath + "/Scripts/NPCBehavior/Documents/"+i_Npc.name+".xml");
+       
+
+        xml.Load(Application.streamingAssetsPath + "/NPCBehavior/"+i_Npc.name+".xml");
 
         XmlNode root = xml.SelectSingleNode("BehaviorTree");
+        
         root = root.FirstChild;
         nodeList.Enqueue(root);
+    
         treenodeList.Enqueue(XmlNodeToTreeNode(root,  i_Npc, type));
-
+    
         BehaviorTree tree = new BehaviorTree(treenodeList.Peek());
         i_Npc.m_BehaviorTree = tree;
 
@@ -45,7 +49,7 @@ class BehaviorTreeHelp
                 treeNode.AddChild(tNode);
             }
         }
-
+      
 
     }
 

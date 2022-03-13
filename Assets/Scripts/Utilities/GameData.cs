@@ -24,30 +24,34 @@ public class GameData
     public static float f_screen_height_ration;
 
 
+
     public static Dictionary<string, NpcController> NPCList;
     public static void Instantiate()
     {
+       
+      
+      
         f_screen_width = Screen.width;
         f_screen_height = Screen.height;
         Ray = GameObject.Find("Ray").gameObject.GetComponent<RayController>();
         cameraCtrl = Camera.main.GetComponent<CameraController>();
         cameraCtrl.Init();
-
-        NPCList = new Dictionary<string, NpcController>();
        
+        NPCList = new Dictionary<string, NpcController>();
       
-        //Naya = GameObject.Find("Naya").gameObject;
-        
 
-       // Naya = GameObject.Find("Criminal").gameObject;
+
         GameObject[] npcs = GameObject.FindGameObjectsWithTag("npc");
         foreach (GameObject npc in npcs)
         {
             NpcController npcctrl = npc.GetComponent<NpcController>();
+         
             NPCList.Add(npcctrl.npcName, npcctrl);
+           
             BehaviorTreeHelp.InitiateTree(npcctrl);
-            Debug.Log(npcctrl.npcName);
+            
         }
+     
     }
 
     public static NpcController GetNPC(string name)

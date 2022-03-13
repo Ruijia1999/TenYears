@@ -55,8 +55,8 @@ public class Notebook : MonoBehaviour
         firstpageAnimator = transform.Find("firstPage").GetComponent<Animator>();
         newpageAnimator = transform.Find("newPage").GetComponent<Animator>();
 
-        btn_dark = Resources.Load<Sprite>("Texture/btn_return_dark");
-        btn_light = Resources.Load<Sprite>("Texture/btn_return_light");
+        btn_dark = Resources.Load<Sprite>("Texture/notebook/btn_return_dark");
+        btn_light = Resources.Load<Sprite>("Texture/notebook/btn_return_light");
 
         
 

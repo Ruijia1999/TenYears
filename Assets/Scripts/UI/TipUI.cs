@@ -23,7 +23,7 @@ public class TipUI : UIBase
     {
         if (Input.GetMouseButtonUp(0) && isShowed)
         {
-
+            GameData.Ray.isEnabled = true;
             MouseController.instance.enabled = true;
             isShowed = false;
             GetProp.SetActive(false);
@@ -32,7 +32,7 @@ public class TipUI : UIBase
   
     public void ShowGetProp(string str_propName)
     {
-
+        GameData.Ray.isEnabled = false;
         GetProp.SetActive(true);
         Invoke("SetShow", 0.5f);
         MouseController.instance.enabled = false;

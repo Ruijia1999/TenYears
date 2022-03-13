@@ -16,6 +16,7 @@ public class RayController : MonoBehaviour
     RoleStatus status;
     private float energy;
     bool canRun;
+    public bool isEnabled;
     public bool isRiding;
     public Vector2 walkVel;
     public Vector2 runVel;
@@ -23,6 +24,7 @@ public class RayController : MonoBehaviour
     private GameObject bicycle;
     private void Awake()
     {
+        
         energy = 3;
         animator = GetComponent<Animator>();
         canRun = true;
@@ -41,19 +43,16 @@ public class RayController : MonoBehaviour
     
     void Update()
     {
+        if (!isEnabled)
+        {
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.F) && status == RoleStatus.standing)
         {
             RemoveBicycle();
         }
             
-        //}else if (Input.GetKeyDown(KeyCode.G) && status == RoleStatus.standing)
-        //{
-        //    isRiding = false;
-        //    animator.SetTrigger("stand");
-        //    animator.SetBool("isRiding", isRiding);
-        //    rb2D.velocity = Vector2.zero;
-           
-        //}
+       
         if (Input.GetKeyDown(KeyCode.A))
         {
 
@@ -92,12 +91,10 @@ public class RayController : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
         {
-   
-            animator.SetTrigger("stand");
-            animator.SetBool("isRiding", isRiding);
 
-            rb2D.velocity = Vector2.zero;
-            status = RoleStatus.standing;
+            Invoke("Stand", 0.1f);
+           
+           
 
         }
 
@@ -179,13 +176,29 @@ public class RayController : MonoBehaviour
         energy = energy > 3 ? 3 : energy;
         Debug.Log(status);
     }
+    public void StopRay()
+    {
+        Stand();
+        this.enabled = false;
+    }
+    void Stand()
+    {
+        if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        {
+            animator.SetTrigger("stand");
+            animator.SetBool("isRiding", isRiding);
 
+            rb2D.velocity = Vector2.zero;
+            status = RoleStatus.standing;
+        }
+    }
     public void GetBicycle()
     {
         isRiding = true;
         animator.SetTrigger("stand");
         animator.SetBool("isRiding", isRiding);
         rb2D.velocity = Vector2.zero;
+        status = RoleStatus.standing;
     }
 
     public void RemoveBicycle()
@@ -199,4 +212,6 @@ public class RayController : MonoBehaviour
             Instantiate<GameObject>(bicycle, transform.position, transform.rotation);
         }
     }
+
+   
 }

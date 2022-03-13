@@ -34,7 +34,8 @@ public class BehaviorTreeNode
 
     public BehaviorTreeNode GetNextNode(string i_ID)
     {
-        foreach(BehaviorTreeNode child in children)
+        BehaviorTreeNode node = children[0];
+        foreach (BehaviorTreeNode child in children)
         {
             if (child.nodeID.Equals(i_ID))
             {
@@ -42,7 +43,7 @@ public class BehaviorTreeNode
             }
         }
 
-        return null;
+        return node;
     }
 
 

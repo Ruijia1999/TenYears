@@ -11,10 +11,13 @@ public class UIController : MonoBehaviour
     // Awake
     public void Awake()
     {
-       // DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
         instance = this;
         canvas = GameObject.Find("Canvas");
-
+        if(canvas == null)
+        {
+            canvas = GameObject.Find("Canvas(Clone)");
+        }
         panels = new Dictionary<string, UIBase>();
     }
 
@@ -40,7 +43,9 @@ public class UIController : MonoBehaviour
     // Open UI
     public void OpenUI<T> (string UIpath, params object[] args) where T: UIBase
     {
+        
         string name = typeof(T).ToString();
+        Debug.Log(name);
         if (panels.ContainsKey(name))
         {
             panels[name].Show();
@@ -70,8 +75,18 @@ public class UIController : MonoBehaviour
     public void DestroyUI<T>(string UI_name) where T : UIBase
     {
         Destroy(panels[UI_name].UIGameObject);
-        Destroy(canvas.GetComponent<T>());
+        panels.Remove(UI_name);
         
       
+    }
+    public void ClearAllUI()
+    {
+        foreach(string UI_name in panels.Keys)
+        {
+            Destroy(panels[UI_name].UIGameObject);
+            
+        }
+        panels.Clear();
+
     }
 }
