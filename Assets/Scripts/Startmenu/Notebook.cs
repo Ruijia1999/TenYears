@@ -6,7 +6,8 @@ public enum BookStatus
 {
     Continue,
     NewGame,
-    Team
+    Team,
+    Setting
 }
 public class Notebook : MonoBehaviour
 {
@@ -133,7 +134,7 @@ public class Notebook : MonoBehaviour
 
     private void BackToMenu()
     {
-        UIController.instance.OpenUI<StartmenuUI>(null);
+        UIController.GetInstance().OpenUI<StartmenuUI>(null);
         
     }
     public void GotoNextPage()
@@ -186,7 +187,12 @@ public class Notebook : MonoBehaviour
             newlevelContent.sprite = Resources.Load<Sprite>("Texture/notebook/team");
             return;
         }
-        if(status == BookStatus.NewGame)
+        if (status == BookStatus.Setting)
+        {
+            newlevelContent.sprite = null;
+            return;
+        }
+        if (status == BookStatus.NewGame)
         {
             if (currentPage == 2)
             {
@@ -246,7 +252,18 @@ public class Notebook : MonoBehaviour
             case BookStatus.Continue: Continue(); break;
             case BookStatus.NewGame: NewGame(); break;
             case BookStatus.Team: Team();break;
+            case BookStatus.Setting: Setting(); break;
         }
+    }
+    void Setting()
+    {
+        go_next.SetActive(false);
+        go_last.SetActive(true);
+        btn_return.GetComponent<Drag>().enabledClick = true;
+        photo.enabledClick = false;
+        pen.enabledClick = false;
+        photo.enabledDrag = false;
+        pen.enabledDrag = false;
     }
     void NewGame()
     {
@@ -280,7 +297,7 @@ public class Notebook : MonoBehaviour
                 go_next.SetActive(true);
                 break;
             case 4: guideAnimator.SetTrigger("continue"); pen.enabledClick = true;pen.enabledDrag = true; break;
-            //case 5: guideAnimator.SetTrigger("continue"); pen.enabledClick = true; pen.enabledDrag = true; break;
+            //case 5: guideAnimator.SetTrigger("continue"); pen.enable Click = true; pen.enabledDrag = true; break;
             case 6: go_guide.SetActive(false); guideAnimator.SetTrigger("continue"); break;
         }
     }

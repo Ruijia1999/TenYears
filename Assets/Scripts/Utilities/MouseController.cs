@@ -167,6 +167,10 @@ public class MouseController : MonoBehaviour
             }
         }
 
+        void MouseScale()
+        {
+
+        }
        
     }
 

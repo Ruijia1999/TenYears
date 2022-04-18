@@ -36,14 +36,14 @@ public class Pen : MonoBehaviour
 
         if (inContent && notebook.isGuiding)
         {
-            UIController.instance.GetUI<MaskUI>("MaskUI").StartMovie();
+            UIController.GetInstance().GetUI<MaskUI>("MaskUI").StartMovie();
             notebook.ContinueGuide(6);
             GetComponent<Animation>().Play();
             animation.Play();
             Invoke("EnternewLevel", 6);
         }else if (inContent && notebook.IsNewLevel())
         {
-            UIController.instance.GetUI<MaskUI>("MaskUI").StartMovie();
+            UIController.GetInstance().GetUI<MaskUI>("MaskUI").StartMovie();
             GetComponent<Animation>().Play();
             animation.Play();
 
@@ -57,16 +57,15 @@ public class Pen : MonoBehaviour
     }
     void EnternewLevel()
     {
-        UIController.instance.DestroyUI<StartmenuUI>("StartmenuUI");
+        UIController.GetInstance().DestroyUI<StartmenuUI>("StartmenuUI");
 
-        UIController.instance.CloseUI<MaskUI>();
+        UIController.GetInstance().GetUI<MaskUI>("MaskUI").EndScene(); ;
         Invoke("LoadScene", 1);
         
     }
     void LoadScene()
     {
-        UIController.instance.GetUI<MaskUI>("MaskUI").EndMovie();
-       // UIController.instance.ClearAllUI();
+        UIController.GetInstance().GetUI<MaskUI>("MaskUI").EndMovie();
         SceneManager.LoadScene("Home");
     }
     private void OnTriggerEnter2D(Collider2D collision)

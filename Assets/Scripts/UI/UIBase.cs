@@ -31,7 +31,7 @@ public class UIBase : MonoBehaviour
     public virtual void Show()
     {
         
-       // UIGameObject.SetActive(true);
+        UIGameObject.SetActive(true);
        // StartCoroutine(SetIsShowed(true));
         
     }
@@ -40,7 +40,7 @@ public class UIBase : MonoBehaviour
     public virtual void Close()
     {
        // StartCoroutine(SetIsShowed(false));
-       // UIGameObject.SetActive(false);
+        UIGameObject.SetActive(false);
         
     }
 

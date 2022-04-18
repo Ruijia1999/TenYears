@@ -74,7 +74,7 @@ public class BackpackUI : UIBase
         GameData.currentItem = prop_name;
         str_currentItem = prop_name;
         img_currentItem.sprite = Resources.Load<Sprite>("Texture/Props/" + prop_name);
-        UIController.instance.GetUI<MainUI>("MainUI").SetCurrentItem(Resources.Load<Sprite>("Texture/Props/" + prop_name));
+        UIController.GetInstance().GetUI<MainUI>("MainUI").SetCurrentItem(Resources.Load<Sprite>("Texture/Props/" + prop_name));
     }
     public void RemoveItem(int prop_index)
     {

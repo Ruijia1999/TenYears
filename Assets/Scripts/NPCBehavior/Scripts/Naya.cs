@@ -88,7 +88,7 @@ public class Naya : NpcController
         Vector3 tr = GameData.GetNPC("Naya").transform.position;
         a.Stop();
         GameData.GetNPC("Naya").transform.position = tr;
-        UIController.instance.GetUI<DialogUI>("DialogUI").StartDialog("");
+        UIController.GetInstance().GetUI<DialogUI>("DialogUI").StartDialog("");
 
     }
 

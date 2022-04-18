@@ -8,6 +8,9 @@ public class CameraController : MonoBehaviour
     private bool isInit = false;
     public GameObject leftBoard;
     public GameObject rightBoard;
+    public float f_slideSpeed;
+    public float minScale;
+    public float maxScale;
     Vector2 vec_RightScreenPoint;
     Vector2 vec_LeftScreenPoint;
     public void Init()
@@ -52,11 +55,27 @@ public class CameraController : MonoBehaviour
 
 
         }
-        
+
         // this.GetComponent<Camera>().orthographicSize += 5 * Input.GetAxis("Mouse ScrollWheel");
 
+        float mouseCenter = Input.GetAxis("Mouse ScrollWheel");
 
+        if (mouseCenter > 0)
+        {
+            if (Camera.main.orthographicSize < maxScale)
+            {
+                Camera.main.orthographicSize = Camera.main.orthographicSize+f_slideSpeed * Time.deltaTime > maxScale? maxScale: Camera.main.orthographicSize + f_slideSpeed * Time.deltaTime;
+            }
+        }
+        else if (mouseCenter < 0)
+        {
+            if (Camera.main.orthographicSize > minScale)
+            {
+                Camera.main.orthographicSize = Camera.main.orthographicSize - f_slideSpeed * Time.deltaTime < minScale ? minScale : Camera.main.orthographicSize - f_slideSpeed * Time.deltaTime;
+            }
+        }
 
     }
 
 }
+

@@ -9,6 +9,7 @@ public class StartmenuUI : UIBase
     private Button btn_Continue;
     private Button btn_Team;
     private Button btn_Quit;
+    private Button btn_Setting;
     private Animator UIAnimator;
     private GameObject go_Notebook;
     private  Notebook notebook;
@@ -33,6 +34,9 @@ public class StartmenuUI : UIBase
         btn_Team = tran_Buttons.Find("Team").GetComponent<Button>();
         btn_Team.onClick.AddListener(OnTeam);
 
+        btn_Setting = tran_Buttons.Find("Setting").GetComponent<Button>();
+        btn_Setting.onClick.AddListener(OnSetting);
+
         btn_Quit = tran_Buttons.Find("Quit").GetComponent<Button>();
         btn_Quit.onClick.AddListener(OnQuit);
         base.Init(args);
@@ -51,6 +55,7 @@ public class StartmenuUI : UIBase
        
     }
 
+    
     public override void Show()
     {
         base.Show();
@@ -62,7 +67,7 @@ public class StartmenuUI : UIBase
     {
         UIAnimator.SetBool("OpenUI", false);
         DisableMenu();
-        base.Close();
+       // base.Close();
     }
 
     public void OnContinueGame()
@@ -75,10 +80,23 @@ public class StartmenuUI : UIBase
             notebook.OpenBook(BookStatus.Continue);
            
         }
+    }
 
-        
+    public void OnSetting()
+    {
+        if (Time.time - fixtime > 1)
+        {
+            fixtime = Time.time;
 
-      
+            Close();
+
+            Invoke("OpenSetting",2);
+        }
+    }
+    void OpenSetting()
+    {
+        UIController.GetInstance().GetUI<StartmenuUI>("StartmenuUI").UIGameObject.SetActive(false);
+        UIController.GetInstance().OpenUI<SettingUI>("Prefabs/UI/SettingUI");
     }
     public void OnNewGame()
     {
@@ -87,6 +105,7 @@ public class StartmenuUI : UIBase
             fixtime = Time.time;
 
             Close();
+
             notebook.OpenBook(BookStatus.NewGame);
             
         }

@@ -4,22 +4,32 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    public static UIController instance;
+    private static UIController instance = null;
     private GameObject canvas;
     public Dictionary<string, UIBase> panels;
    
-    // Awake
-    public void Awake()
+    static void InitUICtrl()
     {
-        DontDestroyOnLoad(gameObject);
-        instance = this;
-        canvas = GameObject.Find("Canvas");
-        if(canvas == null)
-        {
-            canvas = GameObject.Find("Canvas(Clone)");
-        }
-        panels = new Dictionary<string, UIBase>();
+        GameObject go = Instantiate(Resources.Load<GameObject>("Prefabs/UI/Canvas")).gameObject;
+        
+        DontDestroyOnLoad(go);
+        go.name = "Canvas";
+        instance = go.GetComponent<UIController>();
+        instance.canvas = go;
+        instance.panels = new Dictionary<string, UIBase>();
+     
+
     }
+    public static UIController GetInstance()
+    {
+        if (instance == null)
+        {
+           InitUICtrl();
+        }
+        return instance;
+    }
+    // Awake
+
 
     void Start()
     {
@@ -45,7 +55,7 @@ public class UIController : MonoBehaviour
     {
         
         string name = typeof(T).ToString();
-        Debug.Log(name);
+        Debug.Log("UI "+name+"is open");
         if (panels.ContainsKey(name))
         {
             panels[name].Show();

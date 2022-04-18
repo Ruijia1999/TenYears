@@ -132,7 +132,7 @@ public class PropBase : MonoBehaviour
                     }
                     else
                     {
-                        UIController.instance.GetUI<DialogUI>("DialogUI").ShowSelf(str_Condition);
+                        UIController.GetInstance().GetUI<DialogUI>("DialogUI").ShowSelf(str_Condition);
                     }
                     break;
                 }
@@ -144,8 +144,8 @@ public class PropBase : MonoBehaviour
        
         MouseController.instance.enabled = false;
         
-        UIController.instance.GetUI<TipUI>("TipUI").ShowGetProp(str_propID);
-        UIController.instance.GetUI<BackpackUI>("BackpackUI").AddItem(str_propID);
+        UIController.GetInstance().GetUI<TipUI>("TipUI").ShowGetProp(str_propID);
+        UIController.GetInstance().GetUI<BackpackUI>("BackpackUI").AddItem(str_propID);
         GameObject.Destroy(gameObject);
        
     }

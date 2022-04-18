@@ -25,8 +25,7 @@ public class MaskUI : UIBase
     }
     public override void Show()
     {
-        UIGameObject.SetActive(true);
-        animation.Play("showUI");
+       
         
         base.Show();
     }
@@ -44,9 +43,18 @@ public class MaskUI : UIBase
         go_movieMaks.SetActive(false);
         base.Show();
     }
-    public override void Close()
+
+    public void StartScene()
+    {
+        animation.Play("showUI");
+    }
+    public void EndScene()
     {
         animation.Play("fadeUI");
+    }
+    public override void Close()
+    {
+        
        
         base.Close();
     }

@@ -39,7 +39,7 @@ public class door : MonoBehaviour
         if (gameObject.name.Equals("frontdoor"))
         {
 
-            UIController.instance.CloseUI<MaskUI>();
+            UIController.GetInstance().GetUI<MaskUI>("MaskUI").EndScene();
             Invoke("LoadScene", 1);
             OnFar();
             return;
@@ -47,7 +47,7 @@ public class door : MonoBehaviour
         if (gameObject.name.Equals("board"))
         {
 
-            UIController.instance.CloseUI<MaskUI>();
+            UIController.GetInstance().GetUI<MaskUI>("MaskUI").EndScene();
             Invoke("LoadHomeScene", 1);
             OnFar();
             return;
@@ -66,22 +66,24 @@ public class door : MonoBehaviour
     }
     void LoadHomeScene()
     {
+       
         SceneManager.LoadScene("Home");
     }
     void LoadScene()
     {
-       // UIController.instance.ClearAllUI();
+        // UIController.GetInstance().ClearAllUI();
+       
         SceneManager.LoadScene("street");
     }
     public void OnNear()
     {
-        UIController.instance.GetUI<InteractionUI>("InteractionUI").ShowPropInteractionTip(go_door.position, "F", description);
+        UIController.GetInstance().GetUI<InteractionUI>("InteractionUI").ShowPropInteractionTip(go_door.position, "F", description);
         isNear = true;
     }
 
     public void OnFar()
     {
-        UIController.instance.GetUI<InteractionUI>("InteractionUI").ClosePropInteractionTip();
+        UIController.GetInstance().GetUI<InteractionUI>("InteractionUI").ClosePropInteractionTip();
         isNear = false;
     }
 }

@@ -24,7 +24,7 @@ public class MainUI : UIBase
 
     void OpenBackPack()
     {
-        UIController.instance.GetUI<BackpackUI>("BackpackUI").OpenBackPack();
+        UIController.GetInstance().GetUI<BackpackUI>("BackpackUI").OpenBackPack();
     }
 
     // Update is called once per frame
@@ -40,8 +40,8 @@ public class MainUI : UIBase
     {
 
         
-        UIController.instance.CloseUI<MaskUI>();
-        //UIController.instance.DestroyUI<MaskUI>("MaskUI");
+        UIController.GetInstance().CloseUI<MaskUI>();
+        //UIController.GetInstance().DestroyUI<MaskUI>("MaskUI");
         Invoke("LoadNewScene", 1);
         //SceneManager.LoadScene("Startmenu");
     }
@@ -51,7 +51,7 @@ public class MainUI : UIBase
     {
         SceneManager.LoadScene("Startmenu");
 
-        UIController.instance.DestroyUI<MainUI>("MainUI");
+        UIController.GetInstance().DestroyUI<MainUI>("MainUI");
         
       
     }
